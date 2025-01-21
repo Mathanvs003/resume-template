@@ -1,17 +1,16 @@
-import pht from './user.png'
 
-function Header() {
+function Header(props) {
     return (
             <div className="top">
                 <header id="header">
                     <div className="topone">
-                    <img src={pht} alt="User profile" />
+                    <img src={props.images} alt="User profile" />
                     </div>
                     <div className="toptwo">
-                    <h2>Maddy</h2>
-                    <h5>mathans@insytix.com</h5>
-                    <h5>74484 30019</h5>
-                    <h5>Additional information can go here</h5>
+                    <h2>{props.inputName}</h2>
+                    <h5>{props.inputMail}</h5>
+                    <h5>{props.phoneNum}</h5>
+                    <h5>{props.link}</h5>
                     </div>
                 </header>
         </div>

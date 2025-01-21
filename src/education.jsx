@@ -1,24 +1,24 @@
-function EducationSection() {
+function EducationSection(props) {
     return (
       <div className="edu">
         <h4>EDUCATION</h4>
         <EducationItem 
-          institution="Merit Arts & Science College" 
-          degree="BSC Computer Science" 
-          duration="2021-2024" 
-          location="Idaikal, Tirunelveli" 
+          institution={props.clg}
+          degree={props.degree}
+          duration={props.period}
+          location={props.loc1}
         />
         <EducationItem 
-          institution="Senaithalaivar Hr.Sec.School" 
+          institution={props.schl1}
           degree="HSS" 
-          duration="2020-2024" 
-          location="Vickramasingapuram, Tirunelveli" 
+          duration={props.ped1}
+          location={props.loc2}
         />
         <EducationItem 
-          institution="Senaithalaivar Hr.Sec.School" 
+          institution={props.schl2}
           degree="SSLC" 
-          duration="2020-2024" 
-          location="Vickramasingapuram, Tirunelveli" 
+          duration={props.ped2}
+          location={props.loc3}
         />
       </div>
     );

@@ -1,5 +1,5 @@
-function Areaofintrest(){
-    var roles=["Game Developer","Software Developer","Database Administration"]
+function Areaofintrest(props){
+    var roles=[props.int1,props.int2,props.int3]
     return(
         <div className="aofin">
             <h4>AREA OF INTEREST</h4>

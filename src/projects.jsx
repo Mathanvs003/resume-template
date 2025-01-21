@@ -1,6 +1,6 @@
-function Projectsinfo() {
-    const titles = ["Hotel Reservation", "Otp Via Mail", "Institution"];
-    const dates = ["Jan 2024", "May 2024", "Aug 2023"];
+function Projectsinfo(props) {
+    const titles = [props.pro1,props.pro2,props.pro3];
+    const dates = [props.date1,props.date2,props.date3];
 
     return (
         <div className="projects">
@@ -15,7 +15,7 @@ function Projectsinfo() {
 function Projectitems({ title, date }) {
     return (
         <div className="procnt">
-            <div className="heading">
+            <div className="headingpro">
                 <h5>{title}</h5>
             </div>
             <div className="due">

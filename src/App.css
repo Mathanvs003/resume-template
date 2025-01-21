@@ -5,20 +5,68 @@
 .divide{
   display: grid;
   grid-template-columns: 380px 820px;
-  border: 1px solid brown;
   column-gap: 20px;
 }
 .one{
-  border: 2px solid blue;
+  overflow-y: scroll;
+  height: 950px;
   text-wrap: wrap;
+  background-color: rgb(214, 214, 214);
 }
-
-
-
+.heading{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.heading input{
+  margin-left: 70px;
+  margin-right: 20px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  margin-top: -20px;
+}
+.educationinput{
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+.educationinput input{
+  margin-left: 70px;
+  margin-right: 20px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  margin-top: -20px;
+  width: 230px;
+}
+.areainput{
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+.areainput input{
+  margin-left: 70px;
+  margin-right: 20px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  margin-top: -20px;
+  width: 230px;
+}
+.proinput{
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+.proinput input{
+  margin-left: 70px;
+  margin-right: 20px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  margin-top: -20px;
+  width: 230px;
+}
 
 .two{
-  border: 2px solid red;
-}
+  box-shadow: 0px 2px 7px 0px;}
 .top{
   padding-left: 40px;
   padding-right: 40px;
