@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import EducationSection from './education';
 import Areaofintrest from './areaofinterest';
 import Projectsinfo from './projects';
-import Hobbiesinfo, { Personalinfo } from './hobbies';
+import Hobbiesinfo from './hobbies';
 import Common from './common';
 import { useState } from 'react';
 import NameInput from './headerinput';
@@ -13,7 +12,9 @@ import Educationinput from './educationinput';
 import Intrestinput from  './intrestinput'
 import Projectinput from './projectinput';
 import Hobbiesinput from './hobbiesinput';
-import DownloadPDFExample from './pdf';
+import React, { useRef} from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 function App() {
   // header
@@ -103,6 +104,7 @@ function App() {
       console.log("hii",value);
       setInputLoc3(value);
   };
+  
     
 
   // area of interest
@@ -162,7 +164,9 @@ const handledate3Change = (value) => {
 console.log("hii",value);
 setInputdate3(value);
 };
-
+// -----------------------------------------------------------------
+ 
+// hobbies
 const [hob1,setInputhob1 ]=useState('Reading Books')
   const handlehob1Change = (value) => {
     console.log("hii",value);
@@ -180,7 +184,7 @@ const handlehob3Change = (value) => {
   console.log("hii",value);
   setInputhob3(value);
 };
-
+// personal info
 const [per1,setInputper1 ]=useState('Autodidact')
   const handleper1Change = (value) => {
     console.log("hii",value);
@@ -199,27 +203,104 @@ const handleper3Change = (value) => {
   setInputper3(value);
 };
 
+ 
+const divRef = useRef(null); // Reference for the div to capture
+ 
+const [loading, setLoading] = useState(false);
+ 
+const downloadPDF = async () => {
+ 
+  if (!divRef.current) return;
+
+  setLoading(true); // Start loading
+
+  try {
+
+    // Capture the div as a canvas
+
+    const canvas = await html2canvas(divRef.current, {
+
+      scale: 2, // Increase scale for better quality
+
+      useCORS: true, // Handles cross-origin images
+
+    });
+
+    const imgData = canvas.toDataURL('image/png'); // Convert canvas to image
+
+    const pdf = new jsPDF('p', 'mm', 'a4'); // Initialize jsPDF with A4 dimensions
+
+    const pdfWidth = 210; // A4 width in mm
+
+    const pdfHeight = 297; // A4 height in mm
+
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+
+    let position = 0;
+
+    // Add the image to the PDF with page breaks
+
+    while (heightLeft > 0) {
+
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+
+      heightLeft -= pdfHeight;
+
+      position -= pdfHeight;
+
+      if (heightLeft > 0) {
+
+        pdf.addPage();
+
+      }
+
+    }
+
+    // Save the PDF file
+
+    pdf.save('download.pdf');
+
+  } catch (error) {
+
+    console.error('Error generating PDF:', error);
+
+  } finally {
+
+    setLoading(false); // Stop loading
+
+  }
+
+};
+
+
   return(
-    <div className="divide">
+    <><button onClick={downloadPDF} className="download-button">
+
+      {loading ? 'Generating PDF...' : 'Download as PDF'}
+    </button><div className="divide">
         {/* <Common/> */}
-      <div className='one'>
-        <NameInput handleNameChange={handleNameChange} handleMailChange={handleMailChange} handlePhoneChange={handlePhoneChange}  handleLinkChange={handleLinkChange} handleImageChange={handleImageChange}/>  
-        <Educationinput handleCollegeChange={handleCollegeChange} handleDegreeChange={handleDegreeChange} handlePeriod1Change={handlePeriod1Change} handleLocation1Change={handleLocation1Change} handleSchool1Change={handleSchool1Change} handlePeriod2Change={handlePeriod2Change} handleLocation2Change={handleLocation2Change} handleSchool2Change={handleSchool2Change} handlePeriod3Change={handlePeriod3Change} handleLocation3Change={handleLocation3Change} />
-        <Intrestinput handleInt1Change={handleInt1Change} handleInt2Change={handleInt2Change} handleInt3Change={handleInt3Change} />
-        <Projectinput handlepro1Change={handlepro1Change} handlepro2Change={handlepro2Change} handlepro3Change={handlepro3Change} handledate1Change={handledate1Change} handledate2Change={handledate2Change} handledate3Change={handledate3Change}/>
-        <Hobbiesinput handlehob1Change={handlehob1Change} handlehob2Change={handlehob2Change} handlehob3Change={handlehob3Change} handleper1Change={handleper1Change} handleper2Change={handleper2Change} handleper3Change={handleper3Change}/>
-        {/* <DownloadPDFExample/> */}
-      
-      </div>
-      <div className="two">
-        <Header inputName={inputName} inputMail={inputMail} phoneNum={phoneNum}  link={link} images={images}  />
-        <EducationSection clg={clg} degree={degree} period={period} loc1={loc1} schl1={schl1} ped1={ped1} loc2={loc2} schl2={schl2} ped2={ped2} loc3={loc3} />
-        <Areaofintrest int1={int1} int2={int2} int3={int3} />
-        <Projectsinfo pro1={pro1} pro2={pro2} pro3={pro3} date1={date1} date2={date2} date3={date3}/>
-        <Hobbiesinfo hob1={hob1} hob2={hob2} hob3={hob3} per1={per1} per2={per2} per3={per3}/>
-        {/* <Personalinfo/> */}
-      </div>
-    </div>
+
+
+        <div className='one'>
+
+          <NameInput handleNameChange={handleNameChange} handleMailChange={handleMailChange} handlePhoneChange={handlePhoneChange} handleLinkChange={handleLinkChange} handleImageChange={handleImageChange} />
+          <Educationinput handleCollegeChange={handleCollegeChange} handleDegreeChange={handleDegreeChange} handlePeriod1Change={handlePeriod1Change} handleLocation1Change={handleLocation1Change} handleSchool1Change={handleSchool1Change} handlePeriod2Change={handlePeriod2Change} handleLocation2Change={handleLocation2Change} handleSchool2Change={handleSchool2Change} handlePeriod3Change={handlePeriod3Change} handleLocation3Change={handleLocation3Change} />
+          <Intrestinput handleInt1Change={handleInt1Change} handleInt2Change={handleInt2Change} handleInt3Change={handleInt3Change} />
+          <Projectinput handlepro1Change={handlepro1Change} handlepro2Change={handlepro2Change} handlepro3Change={handlepro3Change} handledate1Change={handledate1Change} handledate2Change={handledate2Change} handledate3Change={handledate3Change} />
+          <Hobbiesinput handlehob1Change={handlehob1Change} handlehob2Change={handlehob2Change} handlehob3Change={handlehob3Change} handleper1Change={handleper1Change} handleper2Change={handleper2Change} handleper3Change={handleper3Change} />
+
+        </div>
+        <div ref={divRef} className="two">
+          <Header inputName={inputName} inputMail={inputMail} phoneNum={phoneNum} link={link} images={images} />
+          <EducationSection clg={clg} degree={degree} period={period} loc1={loc1} schl1={schl1} ped1={ped1} loc2={loc2} schl2={schl2} ped2={ped2} loc3={loc3} />
+          <Areaofintrest int1={int1} int2={int2} int3={int3} />
+          <Projectsinfo pro1={pro1} pro2={pro2} pro3={pro3} date1={date1} date2={date2} date3={date3} />
+          <Hobbiesinfo hob1={hob1} hob2={hob2} hob3={hob3} per1={per1} per2={per2} per3={per3} />
+          {/* <Personalinfo/> */}
+        </div>
+      </div></>
   );
 }
 
